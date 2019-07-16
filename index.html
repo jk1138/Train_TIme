@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Train Schedule App</title>
+    <!-- CSS Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Firebase References -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+    <!-- Moment.js Reference -->
+    <script src="https://momentjs.com/downloads/moment.js"> </script> 
+
+    <!-- Javascript File -->
+    <script type="text/javascript" src="assets/app.js"></script>
+</head>
+
+<body>
+
+    <div id="fixed" class= "currentTime">
+        Current time:
+    </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Imaginary Train Schedule</h1>
+            <p class="lead">All Aboard</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <strong>Current Train Schedule</strong>
+            </div>
+            <div class="container" id="box1">
+                <div class="row" id="dataLabel">
+                    <div class="col-sm" id="name">
+                        Train Name
+                    </div>
+                    <div class="col-sm" id="destination">
+                        Destination
+                    </div>
+                    <div class="col-sm" id="frequency">
+                        Frequency (min)
+                    </div>
+                    <div class="col-sm" id="next_a">
+                        Next Arrival
+                    </div>
+                    <div class="col=sm" id="min_a">
+                        Minutes Away
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header"><strong>Add Train to Schedule</strong></div>
+            <div class="card-body">
+
+                <div class="form-group" id="box2">
+                    <label for="name">Train Name</label>
+                    <input type="text" class="form-control" id="formq1">
+                </div>
+
+                <div class="form-group">
+                    <label for="roleInput">Destination</label>
+                    <input type="text" class="form-control" id="formq2">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">First Train Time (HH:mm-military time)</label>
+                    <input type="text" class="form-control" id="formq3">
+                </div>
+
+
+                <div class="form-group">
+                    <label for="rate">Frequency (min)</label>
+                    <input type="text" class="form-control" id="formq4">
+
+                </div>
+                <button type="submit" class="btn btn-primary" id="add-input">Submit</button>
+            </div>
+        </div>
+    </div>
+<!-- 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src=https://momentjs.com/downloads/moment.js> </script>  -->
+
+        <!-- // var firebaseConfig = {
+        //     apiKey: "AIzaSyAkhiHmctjV6GB-ATEqfoES3wx0NxI9QZc",
+        //     authDomain: "employee-database-june09-class.firebaseapp.com",
+        //     databaseURL: "https://employee-database-june09-class.firebaseio.com",
+        //     projectId: "employee-database-june09-class",
+        //     storageBucket: "",
+        //     messagingSenderId: "14533112450",
+        //     appId: "1:14533112450:web:0e253a8387f3a690"
+        // };
+        // // Initialize Firebase
+        // firebase.initializeApp(firebaseConfig);
+        // var database = firebase.database();
+        // var name;
+        // var role;
+        // var startDate;
+        // var monthsWorked = 0;
+        // var monthlyRate = 0;
+        // var totalBilled = 0;
+        // $("#add-input").on("click", function () {
+        //     name = $("#employeeName").val();
+        //     role = $("#role1").val();
+        //     startDate = $("#startDate1").val();
+        //     monthlyRate = $("#monthlyRate1").val();
+        //     database.ref().push({
+        //         name: name,
+        //         role: role,
+        //         startDate: startDate,
+        //         monthlyRate: monthlyRate,
+        //     })
+        //     var dateStarted = startDate;
+        //     console.log("THIS IS THE DATE " + dateStarted)
+        //     // console.log how many months since start date
+        //     console.log(moment().diff(dateStarted, "months"))
+        // });
+
+
+        // database.ref().on("child_added", function (childSnapshot) {
+        //     // Log everything that's coming out of snapshot
+        //     console.log(childSnapshot.val().name);
+        //     console.log(childSnapshot.val().role);
+        //     console.log(childSnapshot.val().startDate);
+        //     console.log(childSnapshot.val().monthsWorked);
+        //     console.log(childSnapshot.val().monthlyRate);
+        //     console.log(childSnapshot.val().totalBilled);
+
+
+        //     $("#currentEmployees").append("<div class='row'><div class='col-sm-2'> " +
+        //         childSnapshot.val().name +
+        //         " </div><div class='col-sm'> " + childSnapshot.val().role +
+        //         " </div><div class='col-sm'> " + childSnapshot.val().startDate +
+        //         " </div><div class='col-sm'> " + childSnapshot.val().monthsWorked +
+        //         " </div><div class='col-sm'> " + childSnapshot.val().monthlyRate +
+        //         " </div><div class='col-sm'> " + childSnapshot.val().totalBilled +
+        //         " </div></div>");
+        //     // Handle the errors
+        // }, function (errorObject) {
+        //     console.log("Errors handled: " + errorObject.code);
+        // });
+    //  -->
+    
+
+
+
+
+
+
+</body>
+
+
+
+
+
+</html>
