@@ -10,16 +10,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://momentjs.com/downloads/moment.js"> </script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <!-- Firebase References -->
     <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
     <!-- Moment.js Reference -->
-    
+    <script src="https://momentjs.com/downloads/moment.js"> </script> 
 
     <!-- Javascript File -->
     <script type="text/javascript" src="assets/javascript/app.js"></script>
@@ -32,32 +29,28 @@
             <p class="lead">All Aboard</p>
         </div>
     </div>
-
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <strong>Current Train Schedule</strong>
-            </div>
-            <div class="container" id="box1">
-                <div class="row" id="dataLabel">
-                    <div class="col-sm" id="name">
-                        Train Name
-                    </div>
-                    <div class="col-sm" id="destination">
-                        Destination
-                    </div>
-                    <div class="col-sm" id="frequency">
-                        Frequency (min)
-                    </div>
-                    <div class="col-sm" id="next_a">
-                        Next Arrival
-                    </div>
-                    <div class="col=sm" id="min_a">
-                        Minutes Away
-                    </div>
-                </div>
-            </div>
+    <div class= "container">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">Current Train Schedules</div>
+            <div class="card-body">
+            <table class="table table-sm table-hover" id='box1'>
+                <thead>
+                <tr>
+                    <th scope="col">Train Name</th>
+                    <th scope="col">Destination</th>
+                    <th scope="col">Frequency (min)</th>
+                    <th scope="col">Next Arrival</th>
+                    <th scope="col">Minutes Away</th>
+                </tr>
+                </thead>
+            <tbody>
+            </tbody>
+          </table>
         </div>
+    </div>    
+    </div>
     </div>
 
     <br>
@@ -67,33 +60,29 @@
             <div class="card-header"><strong>Add Train to Schedule</strong></div>
             <div class="card-body">
 
-                <div class="form-group" id="box2">
+                <div class="form-group">
                     <label for="name">Train Name</label>
-                    <input type="text" class="form-control" id="formq1">
+                    <input type="text" class="form-control" id="nameInput">
                 </div>
 
                 <div class="form-group">
-                    <label for="roleInput">Destination</label>
-                    <input type="text" class="form-control" id="formq2">
+                    <label for="place">Destination</label>
+                    <input type="text" class="form-control" id="destinationInput">
                 </div>
 
                 <div class="form-group">
-                    <label for="date">First Train Time (HH:mm-military time)</label>
-                    <input type="text" class="form-control" id="formq3">
+                    <label for="time">First Train Time (HH:mm-military time)</label>
+                    <input type="text" class="form-control" id="startInput">
                 </div>
 
 
                 <div class="form-group">
                     <label for="rate">Frequency (min)</label>
-                    <input type="text" class="form-control" id="formq4">
+                    <input type="text" class="form-control" id="frequencyInput">
 
                 </div>
-                <button type="submit" class="btn btn-primary" id="add-input">Submit</button>
+                <button type="submit" class="btn btn-primary" id="addInputs">Submit</button>
             </div>
         </div>
-    </div>
-    <div id="fixed" class= "fixedTime">
-        
-    </div>
 </body>
 </html>

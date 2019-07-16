@@ -1,91 +1,102 @@
-$(document).ready(function () {
 
-// Your web app's Firebase configuration
- var firebaseConfig = {
-  apiKey: "AIzaSyCsDI86E6k6FW2Q1H88wHCDGUkhWoD5J0I",
-  authDomain: "trainschedule-b9242.firebaseapp.com",
-  databaseURL: "https://trainschedule-b9242.firebaseio.com",
-  projectId: "trainschedule-b9242",
-  storageBucket: "",
-  messagingSenderId: "110890079109",
-  appId: "1:110890079109:web:83f58ce0fcd46ee6"
-};
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  var database = firebase.database();
+console.log ("hello");
+// 1. Initialize Firebase
+var firebaseConfig = {
+    apiKey: "AIzaSyCsDI86E6k6FW2Q1H88wHCDGUkhWoD5J0I",
+    authDomain: "trainschedule-b9242.firebaseapp.com",
+    databaseURL: "https://trainschedule-b9242.firebaseio.com",
+    projectId: "trainschedule-b9242",
+    storageBucket: "",
+    messagingSenderId: "110890079109",
+    appId: "1:110890079109:web:83f58ce0fcd46ee6"
+    };
 
-    // Global Variables
-    var trainName = "";
-    var trainDestination = "";
-    var trainTime = "";
-    var trainFrequency = "";
-    var nextArrival = "";
-    var minutesAway = "";
-
-
-    // FUNCTIONS  
-// Capture Button Click
-$("#addTrain").on("click", function (event) {
+    firebase.initializeApp(firebaseConfig);
+    var database = firebase.database();
+  
+  // 2. Button for adding trains
+  $("#addInputs").on("click", function(event) {
     event.preventDefault();
-
-    // Grabbed values from text boxes
-    var trainName = $("#trainName").val().trim();
-    var destination = $("#destination").val().trim();
-    var firstTrain = $("#firstTrain").val().trim();
-    var freq = $("#interval").val().trim();
-
-    // Code for handling the push
-    database.ref().push({
-      trainName: trainName,
-      destination: destination,
-      firstTrain: firstTrain,
-      frequency: freq
-    });
+  
+    // Grabs user input
+    var trainName= $("#nameInput").val().trim();
+    var trainDestination = $("#destinationInput").val().trim();
+    var trainStart = moment($("#timeInput").val().trim(), "HH:mm").format("X");
+    var trainFrequency = $("#frequencyInput").val().trim();
+  
+    // Creates local "temporary" object for holding train data
+    var newTrain = {
+      name: trainName,
+      destination: trainDestination,
+      start: trainStart,
+      frequency: trainFrequency
+    };
+  
+    // Uploads train data to the database
+    database.ref().push(newTrain);
+  
+    // Logs everything to console
+    console.log(newTrain.name);
+    console.log(newTrain.destination);
+    console.log(newTrain.start);
+    console.log(newTrain.frequency);
+  
+    console.log("trains added successfully!");
   });
-
-
-  // Firebase watcher + initial loader HINT: This code behaves similarly to .on("value")
-  database.ref().on("child_added", function (childSnapshot) {
-
-    var newTrain = childSnapshot.val().trainName;
-    var newLocation = childSnapshot.val().destination;
-    var newFirstTrain = childSnapshot.val().firstTrain;
-    var newFreq = childSnapshot.val().frequency;
-
-    // First Time (pushed back 1 year to make sure it comes before current time)
-    var startTimeConverted = moment(newFirstTrain, "hh:mm").subtract(1, "years");
-
-    // Current Time
-    var currentTime = moment();
-
-    // Difference between the times
-    var diffTime = moment().diff(moment(startTimeConverted), "minutes");
-
-    // Time apart (remainder)
-    var tRemainder = diffTime % newFreq;
-
-    // Minute(s) Until Train
-    var tMinutesTillTrain = newFreq - tRemainder;
-
-    // Next Train
-    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    var catchTrain = moment(nextTrain).format("HH:mm");
-
-    // Display On Page
-    $("#all-display").append(
-      ' <tr><td>' + newTrain +
-      ' </td><td>' + newLocation +
-      ' </td><td>' + newFreq +
-      ' </td><td>' + catchTrain +
-      ' </td><td>' + tMinutesTillTrain + ' </td></tr>');
-
-    // Clear input fields
-    $("#trainName, #destination, #firstTrain, #interval").val("");
-    return false;
-  },
-    //Handle the errors
-    function (errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });
-
-});
+//     // Clears all of the text-boxes
+//     $("#employee-name-input").val("");
+//     $("#role-input").val("");
+//     $("#start-input").val("");
+//     $("#rate-input").val("");
+//   });
+  
+//   // 3. Create Firebase event for adding employee to the database and a row in the html when a user adds an entry
+//   database.ref().on("child_added", function(childSnapshot) {
+//     console.log(childSnapshot.val());
+  
+//     // Store everything into a variable.
+//     var empName = childSnapshot.val().name;
+//     var empRole = childSnapshot.val().role;
+//     var empStart = childSnapshot.val().start;
+//     var empRate = childSnapshot.val().rate;
+  
+//     // Employee Info
+//     console.log(empName);
+//     console.log(empRole);
+//     console.log(empStart);
+//     console.log(empRate);
+  
+//     // Prettify the employee start
+//     var empStartPretty = moment.unix(empStart).format("MM/DD/YYYY");
+  
+//     // Calculate the months worked using hardcore math
+//     // To calculate the months worked
+//     var empMonths = moment().diff(moment(empStart, "X"), "months");
+//     console.log(empMonths);
+  
+//     // Calculate the total billed rate
+//     var empBilled = empMonths * empRate;
+//     console.log(empBilled);
+  
+//     // Create the new row
+//     var newRow = $("<tr>").append(
+//       $("<td>").text(empName),
+//       $("<td>").text(empRole),
+//       $("<td>").text(empStartPretty),
+//       $("<td>").text(empMonths),
+//       $("<td>").text(empRate),
+//       $("<td>").text(empBilled)
+//     );
+  
+//     // Append the new row to the table
+//     $("#employee-table > tbody").append(newRow);
+//   });
+  
+//   // Example Time Math
+//   // -----------------------------------------------------------------------------
+//   // Assume Employee start date of January 1, 2015
+//   // Assume current date is March 1, 2016
+  
+//   // We know that this is 15 months.
+//   // Now we will create code in moment.js to confirm that any attempt we use meets this test case
+  
